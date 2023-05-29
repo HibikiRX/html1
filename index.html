@@ -1,83 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Compte à rebours</title>
+  <title>Compteur avec décompte</title>
   <style>
     body {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-      font-family: Arial, sans-serif;
-      text-align: center;
-      background-image: url('https://img.freepik.com/vecteurs-libre/fond-galaxie-coloree-realiste_23-2148965681.jpg');
+      background-image: url('https://w.forfun.com/fetch/44/44ee59ccf3674b528672a2108767630f.jpeg');
       background-size: cover;
-      background-position: center;
-    }
-    
-    h1 {
-      margin-bottom: 20px;
-      color: white;
-    }
-    
-    p {
-      font-size: 24px;
-      margin: 10px;
-      color: white;
-    }
-    
-    .countdown-text {
+      background-repeat: no-repeat;
+      text-align: center;
       font-size: 48px;
       color: white;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      margin-top: 200px;
+    }
+
+    img {
+      cursor: pointer;
     }
   </style>
   <script>
-    var count = 60;
+    var counter = 60;
     var clicks = 0;
-    
-    function startCountdown() {
-      var display = document.getElementById('countdown');
-      var clickCounter = document.getElementById('click-counter');
-      
-      var interval = setInterval(function() {
-        display.textContent = count.toFixed(2);
-        count -= 0.01;
-        
-        if (count <= 0) {
-          clearInterval(interval);
-          display.textContent = 'Terminé!';
-        }
-      }, 10);
+
+    function countdown() {
+      var countdownDisplay = document.getElementById('countdown');
+      var clicksDisplay = document.getElementById('clicks');
+      countdownDisplay.innerHTML = counter.toFixed(1);
+      clicksDisplay.innerHTML = clicks;
+
+      if (counter <= 0) {
+        counter = 60;
+        clicks = 0;
+      } else {
+        counter -= 0.1;
+      }
     }
-    
-    function resetCountdown() {
-      count = 60;
+
+    function handleClick() {
       clicks++;
-      document.getElementById('click-counter').textContent = 'Nombre de clics : ' + clicks;
-      
-      // Envoyer le nombre de clics à un serveur (vous devez mettre en place le côté serveur)
-      // Exemple d'appel AJAX pour envoyer les clics à un serveur
-      var xhr = new XMLHttpRequest();
-      xhr.open('POST', 'https://exemple.com/endpoint');
-      xhr.setRequestHeader('Content-Type', 'application/json');
-      xhr.send(JSON.stringify({ clicks: clicks }));
     }
+
+    setInterval(countdown, 100);
+
   </script>
 </head>
 <body>
-  <h1>Compte à rebours</h1>
-  <p class="countdown-text" id="countdown">60.00</p>
-  <p id="click-counter">Nombre de clics : 0</p>
-  
-  <script>
-    startCountdown();
-  </script>
-  
-  <script>
-    document.addEventListener('click', resetCountdown);
-  </script>
+  <div id="countdown">60.0</div>
+  <div>Nombre de clics : <span id="clicks">0</span></div>
+  <img src="https://static.cnews.fr/sites/default/files/web_19453059.jpg-r_1920_1080-f_jpg-q_x-xxyxx_copie_642d407507bed.jpg" onclick="handleClick()" alt="Cliquez ici">
 </body>
 </html>
