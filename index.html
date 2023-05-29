@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Compte à rebours</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-image: url('https://img.freepik.com/vecteurs-libre/fond-galaxie-coloree-realiste_23-2148965681.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+    
+    h1 {
+      margin-bottom: 20px;
+      color: white;
+    }
+    
+    p {
+      font-size: 24px;
+      margin: 10px;
+      color: white;
+    }
+    
+    .countdown-text {
+      font-size: 48px;
+      color: white;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+  </style>
+  <script>
+    var count = 60;
+    var clicks = 0;
+    
+    function startCountdown() {
+      var display = document.getElementById('countdown');
+      var clickCounter = document.getElementById('click-counter');
+      
+      var interval = setInterval(function() {
+        display.textContent = count.toFixed(2);
+        count -= 0.01;
+        
+        if (count <= 0) {
+          clearInterval(interval);
+          display.textContent = 'Terminé!';
+        }
+      }, 10);
+    }
+    
+    function resetCountdown() {
+      count = 60;
+      clicks++;
+      document.getElementById('click-counter').textContent = 'Nombre de clics : ' + clicks;
+      
+      // Envoyer le nombre de clics à un serveur (vous devez mettre en place le côté serveur)
+      // Exemple d'appel AJAX pour envoyer les clics à un serveur
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', 'https://exemple.com/endpoint');
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.send(JSON.stringify({ clicks: clicks }));
+    }
+  </script>
+</head>
+<body>
+  <h1>Compte à rebours</h1>
+  <p class="countdown-text" id="countdown">60.00</p>
+  <p id="click-counter">Nombre de clics : 0</p>
+  
+  <script>
+    startCountdown();
+  </script>
+  
+  <script>
+    document.addEventListener('click', resetCountdown);
+  </script>
+</body>
+</html>
